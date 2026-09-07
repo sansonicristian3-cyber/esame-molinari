@@ -1,5 +1,7 @@
 /* ==========================================================================
-   The Oblique Project — interactions
+   The Oblique Project — interazioni
+   Il codice è scritto in modo difensivo: si disattiva silenziosamente sui
+   dispositivi touch e rispetta la preferenza "motion ridotto".
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,11 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
   if (hasFinePointer) document.body.classList.add('has-fine-pointer');
 
-  /* ---------------- Footer year ---------------- */
+  /* ---------------- Anno nel footer ---------------- */
   const yearEl = document.getElementById('footer-year');
   if (yearEl) yearEl.textContent = `© ${new Date().getFullYear()} The Oblique Project`;
 
-  /* ---------------- Header: hide on scroll down, show on scroll up ---------------- */
+  /* ---------------- Header: si nasconde scendendo, riappare risalendo ---------------- */
   const header = document.getElementById('site-header');
   const progress = document.getElementById('scroll-progress');
   let lastY = window.scrollY;
@@ -35,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* ---------------- Mobile nav ---------------- */
+  /* ---------------- Menu mobile ---------------- */
   const menuToggle = document.getElementById('menu-toggle');
   const mobileNav = document.getElementById('mobile-nav');
 
@@ -53,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     link.addEventListener('click', closeMenu);
   });
 
-  /* ---------------- Custom cursor dot ---------------- */
+  /* ---------------- Puntino del cursore personalizzato ---------------- */
   if (hasFinePointer && !reduceMotion) {
     const dot = document.getElementById('cursor-dot');
     let mx = 0, my = 0, cx = 0, cy = 0;
@@ -74,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------------- Drag-to-scroll work gallery ---------------- */
+  /* ---------------- Gallery progetti trascinabile (drag-to-scroll) ---------------- */
   document.querySelectorAll('[data-drag-scroll]').forEach(track => {
     let isDown = false;
     let startX = 0;
@@ -107,13 +109,13 @@ document.addEventListener('DOMContentLoaded', () => {
     track.addEventListener('touchmove', e => move(e.touches[0].pageX), { passive: true });
     track.addEventListener('touchend', end);
 
-    // Prevent an accidental click firing right after a drag.
+    // Evita che un click accidentale scatti subito dopo un trascinamento.
     track.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', e => { if (moved) e.preventDefault(); });
     });
   });
 
-  /* ---------------- Work image loader / graceful placeholder ---------------- */
+  /* ---------------- Caricamento immagini progetti / placeholder di riserva ---------------- */
   document.querySelectorAll('.work-img').forEach(el => {
     const src = el.getAttribute('data-img');
     if (!src) return;

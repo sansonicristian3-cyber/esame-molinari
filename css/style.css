@@ -1,7 +1,7 @@
 /* ==========================================================================
-   The Oblique Project — custom styles
-   Tailwind cura gli spacing/layout utilities,stili delle scritte e la motion,
-   la drag gallery e le sezioni diagonali.
+   The Oblique Project — stili personalizzati
+   Tailwind gestisce spaziature/layout di utilità; questo file gestisce
+   tipografia, animazioni, la gallery drag-scroll e la sezione diagonale.
    ========================================================================== */
 
 :root{
@@ -24,7 +24,7 @@ body{ overflow-x: hidden; cursor: default; }
 .border-line{ border-color: var(--line); }
 .text-muted{ color: var(--muted); }
 
-/* ---------- Wordmark & type system ---------- */
+/* ---------- Logo testuale & sistema tipografico ---------- */
 .wordmark{ font-family:'Fraunces', serif; letter-spacing:-0.01em; }
 .wordmark em{ font-style: italic; font-weight: 500; }
 
@@ -66,7 +66,7 @@ em{ font-family:'Fraunces', serif; font-style: italic; font-weight: 400; color: 
   margin-bottom: 1.25rem;
 }
 
-/* ---------- Header ---------- */
+/* ---------- Intestazione ---------- */
 #site-header{
   transition: transform .5s var(--ease), background-color .4s ease, border-color .4s ease;
   border-bottom: 1px solid transparent;
@@ -106,14 +106,14 @@ em{ font-family:'Fraunces', serif; font-style: italic; font-weight: 400; color: 
 .mobile-link{ color: var(--fg); }
 .mobile-link em{ color: var(--accent); }
 
-/* ---------- Scroll progress ---------- */
+/* ---------- Barra di avanzamento scroll ---------- */
 #scroll-progress{
   position: fixed; top:0; left:0; height:2px; width:0%;
   background: var(--accent); z-index: 50;
   transition: width .1s linear;
 }
 
-/* ---------- Custom cursor (desktop, fine pointer only) ---------- */
+/* ---------- Cursore personalizzato (solo desktop, puntatore fine) ---------- */
 #cursor-dot{
   position: fixed; top:0; left:0; width:10px; height:10px;
   border-radius:50%; background: var(--accent);
@@ -125,7 +125,7 @@ em{ font-family:'Fraunces', serif; font-style: italic; font-weight: 400; color: 
 .has-fine-pointer #cursor-dot{ opacity: 1; }
 #cursor-dot.is-active{ width: 46px; height: 46px; }
 
-/* ---------- Scroll cue ---------- */
+/* ---------- Indicatore di scroll ---------- */
 .scroll-cue{ font-size: 0.75rem; }
 .scroll-line{ width:1px; height: 32px; background: var(--muted); overflow: hidden; position: relative; }
 .scroll-line::after{
@@ -138,7 +138,7 @@ em{ font-family:'Fraunces', serif; font-style: italic; font-weight: 400; color: 
   60%,100%{ transform: translateY(200%); }
 }
 
-/* ---------- Marquee ---------- */
+/* ---------- Marquee (testo scorrevole) ---------- */
 .marquee-strip{ overflow: hidden; white-space: nowrap; }
 .marquee-track{
   display: inline-flex;
@@ -154,7 +154,7 @@ em{ font-family:'Fraunces', serif; font-style: italic; font-weight: 400; color: 
   to{ transform: translateX(-50%); }
 }
 
-/* ---------- Work gallery (drag-scroll) ---------- */
+/* ---------- Gallery progetti (drag-scroll) ---------- */
 .work-track{
   display:flex;
   align-items:flex-start;
@@ -175,8 +175,8 @@ em{ font-family:'Fraunces', serif; font-style: italic; font-weight: 400; color: 
 }
 .work-img{
   aspect-ratio: 3/4;
-  background-color: #262622;
-  background-image: linear-gradient(160deg, #2a2a26 0%, #1c1c1a 70%);
+  background-color: var(--accent);
+  background-image: none;
   background-size: cover;
   background-position: center;
   overflow: hidden;
@@ -185,7 +185,7 @@ em{ font-family:'Fraunces', serif; font-style: italic; font-weight: 400; color: 
 .work-img::after{
   content: attr(data-label);
 }
-.work-img{ background-image: var(--bg-url, linear-gradient(160deg, #2a2a26 0%, #1c1c1a 70%)); }
+.work-img{ background-image: var(--bg-url, none); }
 
 .work-card .work-img{ transition: none; }
 .work-card{ overflow: visible; }
@@ -194,7 +194,7 @@ em{ font-family:'Fraunces', serif; font-style: italic; font-weight: 400; color: 
 
 .work-img.is-placeholder{ display:flex; align-items:flex-end; }
 .ph-label{
-  font-family:'Fraunces', serif; font-style: italic; color: var(--muted);
+  font-family:'Fraunces', serif; font-style: italic; color: var(--bgdeep);
   font-size: 0.85rem; padding: 1rem; line-height: 1.3;
 }
 
@@ -207,7 +207,7 @@ em{ font-family:'Fraunces', serif; font-style: italic; font-weight: 400; color: 
 .work-card:hover .work-meta{ color: var(--fg); }
 .work-meta span:last-child{ color: var(--muted); }
 
-/* ---------- Diagonal studio section ---------- */
+/* ---------- Sezione studio diagonale ---------- */
 .diagonal-section{
   position: relative;
   display: grid;
@@ -252,7 +252,7 @@ em{ font-family:'Fraunces', serif; font-style: italic; font-weight: 400; color: 
   }
 }
 
-/* ---------- Reveal-on-load hero ---------- */
+/* ---------- Comparsa titolo hero al caricamento ---------- */
 [data-reveal]{
   opacity: 0;
   transform: translateY(18px);
@@ -263,7 +263,7 @@ em{ font-family:'Fraunces', serif; font-style: italic; font-weight: 400; color: 
   to{ opacity: 1; transform: translateY(0); }
 }
 
-/* ---------- Reduced motion ---------- */
+/* ---------- Motion ridotto (accessibilità) ---------- */
 @media (prefers-reduced-motion: reduce){
   html{ scroll-behavior: auto; }
   .marquee-track{ animation: none; }
@@ -272,3 +272,4 @@ em{ font-family:'Fraunces', serif; font-style: italic; font-weight: 400; color: 
   .work-card:hover .work-img{ transform: none; }
   *{ transition-duration: 0.01ms !important; }
 }
+
