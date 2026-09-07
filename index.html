@@ -5,3 +5,215 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Oblique Project — Portfolio</title>
 <meta name="description" content="The Oblique Project — brand identity, visual communication and strategic design.">
+
+<!-- Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Tailwind impostazioni-->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg: '#1c1c1c',
+          bgdeep: '#141414',
+          accent: '#c6ff00',
+          fg: '#f4f3ee',
+          muted: '#8f8f89'
+        },
+        fontFamily: {
+          serif: ['Fraunces', 'serif'],
+          sans: ['Inter', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-bg text-fg font-sans antialiased">
+
+<!-- punto cursore personalizzato -->
+<div id="cursor-dot" aria-hidden="true"></div>
+
+<!-- line di progresso-->
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<!-- ============ HEADER ============ -->
+<header id="site-header" class="fixed top-0 left-0 w-full z-40">
+  <div class="flex items-center justify-between px-6 md:px-10 py-5">
+    <a href="#top" class="wordmark text-sm md:text-base tracking-tight">The <em>Oblique</em> Project</a>
+
+    <nav class="hidden md:flex items-center gap-10 text-sm text-muted">
+      <a href="#work" class="nav-link">Work</a>
+      <a href="#studio" class="nav-link">Studio</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+
+    <button id="menu-toggle" class="md:hidden flex flex-col gap-[5px] w-6" aria-label="Open menu" aria-expanded="false">
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+    </button>
+  </div>
+</header>
+
+<!-- nav del mobile-->
+<div id="mobile-nav" class="fixed inset-0 z-30 flex flex-col items-center justify-center gap-8 text-3xl font-serif italic">
+  <a href="#work" class="mobile-link">Work</a>
+  <a href="#studio" class="mobile-link">Studio</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+</div>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="relative min-h-[100svh] flex flex-col justify-between px-6 md:px-10 pt-28 pb-8 overflow-hidden">
+
+  <div class="flex items-start justify-between text-xs text-muted">
+    <p class="max-w-[10rem] leading-snug">Open for freelance<br>work &amp; collaborations</p>
+    <p class="max-w-[10rem] leading-snug text-right">Folio<br>Vol. I</p>
+  </div>
+
+  <div class="flex-1 flex items-center">
+    <h1 class="hero-title" data-reveal>
+      Identity built<br>
+      at a <em>slight</em><br>
+      angle.
+    </h1>
+  </div>
+
+  <div class="flex items-end justify-between text-xs text-muted">
+    <p class="max-w-[13rem] leading-snug">Brand identity, visual communication &amp; strategic design — since 2019.</p>
+    <a href="#work" class="scroll-cue flex flex-col items-center gap-2 text-muted">
+      <span>Scroll</span>
+      <span class="scroll-line"></span>
+    </a>
+  </div>
+</section>
+
+<!-- striscia marquee-->
+<div class="marquee-strip border-y border-line py-3">
+  <div class="marquee-track">
+    <span>The Oblique Project&nbsp;&nbsp;—&nbsp;&nbsp;</span>
+    <span>Branding&nbsp;&nbsp;—&nbsp;&nbsp;</span>
+    <span>Art Direction&nbsp;&nbsp;—&nbsp;&nbsp;</span>
+    <span>Editorial&nbsp;&nbsp;—&nbsp;&nbsp;</span>
+    <span>Visual Identity&nbsp;&nbsp;—&nbsp;&nbsp;</span>
+    <span>The Oblique Project&nbsp;&nbsp;—&nbsp;&nbsp;</span>
+    <span>Branding&nbsp;&nbsp;—&nbsp;&nbsp;</span>
+    <span>Art Direction&nbsp;&nbsp;—&nbsp;&nbsp;</span>
+    <span>Editorial&nbsp;&nbsp;—&nbsp;&nbsp;</span>
+    <span>Visual Identity&nbsp;&nbsp;—&nbsp;&nbsp;</span>
+  </div>
+</div>
+
+<!-- ============ WORK ============ -->
+<section id="work" class="px-6 md:px-10 py-24 md:py-32">
+  <div class="flex items-end justify-between mb-12 md:mb-16">
+    <h2 class="section-title">Selected<br><em>work</em></h2>
+    <p class="hidden md:block text-xs text-muted max-w-[13rem] text-right">Hold and drag to explore the full archive of projects.</p>
+  </div>
+
+  <!-- 2025 -->
+  <div class="mb-16 md:mb-20">
+    <p class="year-label">2025</p>
+    <div class="work-track" data-drag-scroll>
+      <a class="work-card" style="--w:22vw;--wmin:280px" href="#" data-title="Meridian — Hospitality identity">
+        <div class="work-img" data-img="assets/work-01.jpg"></div>
+        <p class="work-meta"><span>Meridian</span><span>Identity</span></p>
+      </a>
+      <a class="work-card mt-10" style="--w:16vw;--wmin:220px" href="#" data-title="Nord Studio — Editorial system">
+        <div class="work-img" data-img="assets/work-02.jpg"></div>
+        <p class="work-meta"><span>Nord Studio</span><span>Editorial</span></p>
+      </a>
+      <a class="work-card" style="--w:24vw;--wmin:300px" href="#" data-title="Alba — Architecture portfolio">
+        <div class="work-img" data-img="assets/work-03.jpg"></div>
+        <p class="work-meta"><span>Alba</span><span>Web &amp; Brand</span></p>
+      </a>
+      <a class="work-card mt-6" style="--w:16vw;--wmin:220px" href="#" data-title="Onda — Packaging">
+        <div class="work-img" data-img="assets/work-04.jpg"></div>
+        <p class="work-meta"><span>Onda</span><span>Packaging</span></p>
+      </a>
+    </div>
+    <p class="text-xs text-muted mt-4">4 projects</p>
+  </div>
+
+  <!-- 2024 -->
+  <div>
+    <p class="year-label">2024</p>
+    <div class="work-track" data-drag-scroll>
+      <a class="work-card" style="--w:18vw;--wmin:240px" href="#" data-title="Fenice — Motion &amp; art direction">
+        <div class="work-img" data-img="assets/work-05.jpg"></div>
+        <p class="work-meta"><span>Fenice</span><span>Motion</span></p>
+      </a>
+      <a class="work-card mt-8" style="--w:22vw;--wmin:280px" href="#" data-title="Tandem — Advertising campaign">
+        <div class="work-img" data-img="assets/work-06.jpg"></div>
+        <p class="work-meta"><span>Tandem</span><span>Campaign</span></p>
+      </a>
+      <a class="work-card" style="--w:14vw;--wmin:200px" href="#" data-title="Solstice — Studio session">
+        <div class="work-img" data-img="assets/work-07.jpg"></div>
+        <p class="work-meta"><span>Solstice</span><span>Direction</span></p>
+      </a>
+    </div>
+    <p class="text-xs text-muted mt-4">3 projects</p>
+  </div>
+</section>
+
+<!-- ============ STUDIO / ABOUT  ============ -->
+<section id="studio" class="diagonal-section">
+  <div class="diagonal-panel diagonal-panel--dark">
+    <p class="statement">
+      We are an independent creative studio focused on
+      <em>brand identity</em>, <em>visual communication</em> and
+      <em>strategic design</em>.
+    </p>
+  </div>
+  <div class="diagonal-panel diagonal-panel--accent">
+    <ol class="process-list">
+      <li>
+        <span class="process-index">01 — Research</span>
+        <p>We study the market, the industry and the brand's position within it.</p>
+      </li>
+      <li>
+        <span class="process-index">02 — Strategy</span>
+        <p>We define a clear direction and a strategic foundation to build on.</p>
+      </li>
+      <li>
+        <span class="process-index">03 — Design</span>
+        <p>We translate that strategy into a coherent, distinctive visual system.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="px-6 md:px-10 py-28 md:py-40">
+  <p class="year-label mb-6">Contact</p>
+  <a href="mailto:hello@theobliqueproject.com" class="contact-title block">
+    Let's build<br>something <em>oblique</em>.
+  </a>
+
+  <div class="mt-16 md:mt-24 flex flex-col md:flex-row md:items-end md:justify-between gap-10">
+    <a href="mailto:hello@theobliqueproject.com" class="text-sm md:text-base border-b border-fg/40 pb-1 w-max">
+      hello@theobliqueproject.com
+    </a>
+
+    <div class="flex gap-8 text-sm text-muted">
+      <a href="https://instagram.com/the_oblique_project" target="_blank" rel="noopener" class="nav-link">Instagram</a>
+      <a href="#" class="nav-link">LinkedIn</a>
+      <a href="#" class="nav-link">Behance</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="px-6 md:px-10 py-6 flex items-center justify-between text-xs text-muted border-t border-line">
+  <span id="footer-year">© 2026 The Oblique Project</span>
+  <a href="#top" class="nav-link">Back to top</a>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
