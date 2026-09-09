@@ -6,12 +6,10 @@
 <title>The Oblique Project — Portfolio</title>
 <meta name="description" content="The Oblique Project — brand identity, visual communication and strategic design.">
 
-<!-- Font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-<!-- Tailwind impostazioni-->
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
@@ -33,20 +31,22 @@
   }
 </script>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-bg text-fg font-sans antialiased">
 
-<!-- punto cursore personalizzato -->
 <div id="cursor-dot" aria-hidden="true"></div>
-
-<!-- line di progresso-->
 <div id="scroll-progress" aria-hidden="true"></div>
 
 <!-- ============ HEADER ============ -->
 <header id="site-header" class="fixed top-0 left-0 w-full z-40">
   <div class="flex items-center justify-between px-6 md:px-10 py-5">
-    <a href="#top" class="wordmark text-sm md:text-base tracking-tight">The <em>Oblique</em> Project</a>
+    <a href="#top" class="brand">
+      <img src="assets/logo.svg" alt="The Oblique Project" class="brand-logo"
+           onload="this.nextElementSibling.style.display='none'"
+           onerror="this.style.display='none'">
+      <span class="wordmark">The <em>Oblique</em> Project</span>
+    </a>
 
     <nav class="hidden md:flex items-center gap-10 text-sm text-muted">
       <a href="#work" class="nav-link">Work</a>
@@ -61,7 +61,6 @@
   </div>
 </header>
 
-<!-- nav del mobile-->
 <div id="mobile-nav" class="fixed inset-0 z-30 flex flex-col items-center justify-center gap-8 text-3xl font-serif italic">
   <a href="#work" class="mobile-link">Work</a>
   <a href="#studio" class="mobile-link">Studio</a>
@@ -76,7 +75,7 @@
     <p class="max-w-[10rem] leading-snug text-right">Folio<br>Vol. I</p>
   </div>
 
-  <div class="flex-1 flex items-center">
+  <div class="flex-1 flex items-center justify-center text-center">
     <h1 class="hero-title" data-reveal>
       Identity built<br>
       at a <em>slight</em><br>
@@ -93,75 +92,128 @@
   </div>
 </section>
 
-<!-- striscia marquee-->
+<!-- marquee strip -->
 <div class="marquee-strip border-y border-line py-3">
-  <div class="marquee-track">
-    <span>The Oblique Project&nbsp;&nbsp;—&nbsp;&nbsp;</span>
-    <span>Branding&nbsp;&nbsp;—&nbsp;&nbsp;</span>
-    <span>Art Direction&nbsp;&nbsp;—&nbsp;&nbsp;</span>
-    <span>Editorial&nbsp;&nbsp;—&nbsp;&nbsp;</span>
-    <span>Visual Identity&nbsp;&nbsp;—&nbsp;&nbsp;</span>
-    <span>The Oblique Project&nbsp;&nbsp;—&nbsp;&nbsp;</span>
-    <span>Branding&nbsp;&nbsp;—&nbsp;&nbsp;</span>
-    <span>Art Direction&nbsp;&nbsp;—&nbsp;&nbsp;</span>
-    <span>Editorial&nbsp;&nbsp;—&nbsp;&nbsp;</span>
-    <span>Visual Identity&nbsp;&nbsp;—&nbsp;&nbsp;</span>
+  <div class="marquee-track" id="marquee-track">
+    <div class=""
+    <span class="font-semibold tracking-widest uppercase text-sm text-white px-6">
+        The oblique project &nbsp;&nbsp;- &nbsp;&nbsp; Branding &nbsp;&nbsp;- &nbsp;&nbsp; Art direction &nbsp;&nbsp;-&nbsp;&nbsp; Editorial &nbsp;&nbsp;-&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;-
+         The oblique project &nbsp;&nbsp;- &nbsp;&nbsp; Branding &nbsp;&nbsp;- &nbsp;&nbsp; Art direction &nbsp;&nbsp;-&nbsp;&nbsp; Editorial &nbsp;&nbsp;-&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;-
+         The oblique project &nbsp;&nbsp;- &nbsp;&nbsp; Branding &nbsp;&nbsp;- &nbsp;&nbsp; Art direction &nbsp;&nbsp;-&nbsp;&nbsp; Editorial &nbsp;&nbsp;-&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;-
+         The oblique project &nbsp;&nbsp;- &nbsp;&nbsp; Branding &nbsp;&nbsp;- &nbsp;&nbsp; Art direction &nbsp;&nbsp;-&nbsp;&nbsp; Editorial &nbsp;&nbsp;-&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;-
+    </span>
+    
   </div>
 </div>
 
 <!-- ============ WORK ============ -->
 <section id="work" class="px-6 md:px-10 py-24 md:py-32">
-  <div class="flex items-end justify-between mb-12 md:mb-16">
+  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
     <h2 class="section-title">Selected<br><em>work</em></h2>
-    <p class="hidden md:block text-xs text-muted max-w-[13rem] text-right">Hold and drag to explore the full archive of projects.</p>
+    <p class="hidden md:block text-xs text-muted max-w-[13rem] text-right">Hold and drag to explore. Click a project to open it.</p>
   </div>
 
-  <!-- 2025 -->
-  <div class="mb-16 md:mb-20">
-    <p class="year-label">2025</p>
-    <div class="work-track" data-drag-scroll>
-      <a class="work-card" style="--w:22vw;--wmin:280px" href="#" data-title="Meridian — Hospitality identity">
-        <div class="work-img" data-img="assets/work-01.jpg"></div>
-        <p class="work-meta"><span>Meridian</span><span>Identity</span></p>
-      </a>
-      <a class="work-card mt-10" style="--w:16vw;--wmin:220px" href="#" data-title="Nord Studio — Editorial system">
-        <div class="work-img" data-img="assets/work-02.jpg"></div>
-        <p class="work-meta"><span>Nord Studio</span><span>Editorial</span></p>
-      </a>
-      <a class="work-card" style="--w:24vw;--wmin:300px" href="#" data-title="Alba — Architecture portfolio">
-        <div class="work-img" data-img="assets/work-03.jpg"></div>
-        <p class="work-meta"><span>Alba</span><span>Web &amp; Brand</span></p>
-      </a>
-      <a class="work-card mt-6" style="--w:16vw;--wmin:220px" href="#" data-title="Onda — Packaging">
-        <div class="work-img" data-img="assets/work-04.jpg"></div>
-        <p class="work-meta"><span>Onda</span><span>Packaging</span></p>
-      </a>
-    </div>
-    <p class="text-xs text-muted mt-4">4 projects</p>
+  <div class="work-filters" role="tablist" aria-label="Filter work by type">
+    <button class="filter-btn is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+    <button class="filter-btn" data-filter="photography" role="tab" aria-selected="false">Photography</button>
+    <button class="filter-btn" data-filter="video" role="tab" aria-selected="false">Video</button>
+    <button class="filter-btn" data-filter="graphic" role="tab" aria-selected="false">Graphic</button>
   </div>
 
-  <!-- 2024 -->
-  <div>
-    <p class="year-label">2024</p>
-    <div class="work-track" data-drag-scroll>
-      <a class="work-card" style="--w:18vw;--wmin:240px" href="#" data-title="Fenice — Motion &amp; art direction">
-        <div class="work-img" data-img="assets/work-05.jpg"></div>
-        <p class="work-meta"><span>Fenice</span><span>Motion</span></p>
-      </a>
-      <a class="work-card mt-8" style="--w:22vw;--wmin:280px" href="#" data-title="Tandem — Advertising campaign">
-        <div class="work-img" data-img="assets/work-06.jpg"></div>
-        <p class="work-meta"><span>Tandem</span><span>Campaign</span></p>
-      </a>
-      <a class="work-card" style="--w:14vw;--wmin:200px" href="#" data-title="Solstice — Studio session">
-        <div class="work-img" data-img="assets/work-07.jpg"></div>
-        <p class="work-meta"><span>Solstice</span><span>Direction</span></p>
-      </a>
-    </div>
-    <p class="text-xs text-muted mt-4">3 projects</p>
+  <div class="work-track" data-drag-scroll>
+
+    <button type="button" class="work-card" data-category="graphic"
+      data-title="Meridian" data-tag="Graphic — Identity"
+      data-desc="A hospitality brand identity built around warm minimalism: a restrained mark, a custom serif for signage, and a palette drawn from natural stone and linen."
+      data-images="assets/work-01.jpg" style="--w:22vw;--wmin:280px">
+      <div class="work-img"><span class="work-hover-label">Meridian</span></div>
+    </button>
+
+    <button type="button" class="work-card mt-10" data-category="graphic"
+      data-title="Nord Studio" data-tag="Graphic — Editorial"
+      data-desc="An editorial system for an architecture studio: a modular grid, a single display cut, and a printed journal released twice a year."
+      data-images="assets/work-02.jpg" style="--w:16vw;--wmin:220px">
+      <div class="work-img"><span class="work-hover-label">Nord Studio</span></div>
+    </button>
+
+    <button type="button" class="work-card" data-category="graphic"
+      data-title="Alba" data-tag="Graphic — Web &amp; Brand"
+      data-desc="A digital identity and site for an architecture collective, translating their concrete-and-light material language into type, motion and layout."
+      data-images="assets/work-03.jpg" style="--w:24vw;--wmin:300px">
+      <div class="work-img"><span class="work-hover-label">Alba</span></div>
+    </button>
+
+    <button type="button" class="work-card mt-6" data-category="graphic"
+      data-title="Onda" data-tag="Graphic — Packaging"
+      data-desc="Packaging system for a small-batch skincare line: a wave-derived mark, recyclable stock, and a colour code that shifts with each product family."
+      data-images="assets/work-04.jpg" style="--w:16vw;--wmin:220px">
+      <div class="work-img"><span class="work-hover-label">Onda</span></div>
+    </button>
+
+    <button type="button" class="work-card" data-category="graphic"
+      data-title="Isonae" data-tag="Graphic — Event Poster"
+      data-desc="Event poster for La Fenice's ISONAE night: gestural hands sprayed over a two-tone gradient, with a single bold display cut carrying the name."
+      data-images="assets/POSTER1.png,assets/POSTER2.png,assets/POSTER3.png" style="--w:18vw;--wmin:240px">
+      <div class="work-img"><span class="work-hover-label">Isonae</span></div>
+    </button>
+
+    <button type="button" class="work-card mt-8" data-category="video"
+      data-title="Tandem" data-tag="Video — Campaign"
+      data-desc="A 30-second advertising campaign built around split-screen pairings — two products, two audiences, one shared idea."
+      data-images="assets/work-06.jpg" style="--w:22vw;--wmin:280px">
+      <div class="work-img"><span class="work-hover-label">Tandem</span></div>
+    </button>
+
+    <button type="button" class="work-card" data-category="video"
+      data-title="Nebula" data-tag="Video — Motion reel"
+      data-desc="A motion identity reel exploring particle systems and slow-release typography for a music label's live visuals."
+      data-images="assets/work-08.jpg" style="--w:16vw;--wmin:220px">
+      <div class="work-img"><span class="work-hover-label">Nebula</span></div>
+    </button>
+
+    <button type="button" class="work-card mt-6" data-category="photography"
+      data-title="Solstice" data-tag="Photography — Studio session"
+      data-desc="A studio photography session exploring hard shadow and negative space, shot for a dance company's season announcement."
+      data-images="assets/work-07.jpg" style="--w:14vw;--wmin:200px">
+      <div class="work-img"><span class="work-hover-label">Solstice</span></div>
+    </button>
+
+    <button type="button" class="work-card" data-category="photography"
+      data-title="Aria" data-tag="Photography — Portrait series"
+      data-desc="A portrait series for an independent record label, photographed on location with natural light and minimal retouching."
+      data-images="assets/work-09.jpg" style="--w:18vw;--wmin:240px">
+      <div class="work-img"><span class="work-hover-label">Aria</span></div>
+    </button>
+
   </div>
 </section>
 
-<!-- ============ STUDIO / ABOUT  ============ -->
+<!-- work modal / carousel -->
+<div id="work-modal" class="work-modal" aria-hidden="true">
+  <div class="work-modal-backdrop" data-modal-close></div>
+  <div class="work-modal-inner" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button type="button" class="modal-close" data-modal-close aria-label="Close">×</button>
+
+    <div class="modal-media">
+      <button type="button" class="modal-nav modal-prev-img" aria-label="Previous image">‹</button>
+      <img id="modal-img" src="" alt="">
+      <button type="button" class="modal-nav modal-next-img" aria-label="Next image">›</button>
+      <div class="modal-dots" id="modal-dots"></div>
+    </div>
+
+    <div class="modal-info">
+      <p class="modal-tag" id="modal-tag"></p>
+      <h3 id="modal-title"></h3>
+      <p id="modal-desc"></p>
+      <div class="modal-project-nav">
+        <button type="button" class="modal-project-prev" id="modal-project-prev">← Previous project</button>
+        <button type="button" class="modal-project-next" id="modal-project-next">Next project →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ STUDIO / ABOUT (diagonal split) ============ -->
 <section id="studio" class="diagonal-section">
   <div class="diagonal-panel diagonal-panel--dark">
     <p class="statement">
@@ -189,13 +241,51 @@
 </section>
 
 <!-- ============ CONTACT ============ -->
-<section id="contact" class="px-6 md:px-10 py-28 md:py-40">
+<section id="contact" class="px-6 md:px-10 py-28 md:py-32">
   <p class="year-label mb-6">Contact</p>
   <a href="mailto:hello@theobliqueproject.com" class="contact-title block">
     Let's build<br>something <em>oblique</em>.
   </a>
 
-  <div class="mt-16 md:mt-24 flex flex-col md:flex-row md:items-end md:justify-between gap-10">
+  <div class="contact-grid">
+
+    <!-- contact form -->
+    <form class="contact-form" action="https://formsubmit.co/hello@theobliqueproject.com" method="POST">
+      <input type="hidden" name="_subject" value="New inquiry — The Oblique Project">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+
+      <label class="form-row">
+        <span>Name</span>
+        <input type="text" name="name" required>
+      </label>
+      <label class="form-row">
+        <span>Email</span>
+        <input type="email" name="email" required>
+      </label>
+      <label class="form-row">
+        <span>Message</span>
+        <textarea name="message" rows="5" required></textarea>
+      </label>
+
+      <button type="submit" class="form-submit">Send message</button>
+      <p class="form-note">Replying to hello@theobliqueproject.com — swap this for your real address in index.html.</p>
+      <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- playground: tetris -->
+    <div class="tetris-panel">
+      <div class="tetris-head">
+        <p class="year-label mb-0">Playground</p>
+        <p class="tetris-score">Score <span id="tetris-score">0</span></p>
+      </div>
+      <canvas id="tetris-canvas" width="200" height="360" tabindex="0"></canvas>
+      <p class="tetris-hint">Click the board, then use ← → to move, ↓ soft drop, ↑ rotate, space to hard drop.</p>
+    </div>
+
+  </div>
+
+  <div class="mt-16 md:mt-20 flex flex-col md:flex-row md:items-end md:justify-between gap-10">
     <a href="mailto:hello@theobliqueproject.com" class="text-sm md:text-base border-b border-fg/40 pb-1 w-max">
       hello@theobliqueproject.com
     </a>
@@ -208,12 +298,23 @@
   </div>
 </section>
 
+<!-- form confirmation popup -->
+<div id="form-popup" class="form-popup" aria-hidden="true">
+  <div class="form-popup-backdrop" data-popup-close></div>
+  <div class="form-popup-card" role="alertdialog" aria-live="assertive">
+    <button type="button" class="modal-close" data-popup-close aria-label="Close">×</button>
+    <div class="form-popup-icon" id="form-popup-icon">✓</div>
+    <p class="form-popup-title" id="form-popup-title">Message sent</p>
+    <p class="form-popup-text" id="form-popup-text">Thanks for reaching out — we'll get back to you soon.</p>
+  </div>
+</div>
+
 <!-- ============ FOOTER ============ -->
 <footer class="px-6 md:px-10 py-6 flex items-center justify-between text-xs text-muted border-t border-line">
   <span id="footer-year">© 2026 The Oblique Project</span>
   <a href="#top" class="nav-link">Back to top</a>
 </footer>
 
-<script src="main.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
