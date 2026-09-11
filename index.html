@@ -20,11 +20,34 @@
           bgdeep: '#141414',
           accent: '#c6ff00',
           fg: '#f4f3ee',
-          muted: '#8f8f89'
+          muted: '#8f8f89',
+          line: 'rgba(244,243,238,0.14)'
         },
         fontFamily: {
           serif: ['Fraunces', 'serif'],
           sans: ['Inter', 'sans-serif']
+        },
+        transitionTimingFunction: {
+          oblique: 'cubic-bezier(.16,.84,.44,1)'
+        },
+        keyframes: {
+          reveal: {
+            '0%': { opacity: 0, transform: 'translateY(18px)' },
+            '100%': { opacity: 1, transform: 'translateY(0)' }
+          },
+          scrolldrip: {
+            '0%': { transform: 'translateY(-100%)' },
+            '60%, 100%': { transform: 'translateY(200%)' }
+          },
+          ticker: {
+            from: { transform: 'translateX(0)' },
+            to: { transform: 'translateX(-50%)' }
+          }
+        },
+        animation: {
+          reveal: 'reveal 1s cubic-bezier(.16,.84,.44,1) 0.15s both',
+          scrolldrip: 'scrolldrip 2.2s ease-in-out infinite',
+          ticker: 'ticker 34s linear infinite'
         }
       }
     }
@@ -33,19 +56,19 @@
 
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-bg text-fg font-sans antialiased">
+<body class="bg-bg text-fg font-sans antialiased cursor-default overflow-x-hidden selection:bg-accent selection:text-bgdeep">
 
-<div id="cursor-dot" aria-hidden="true"></div>
-<div id="scroll-progress" aria-hidden="true"></div>
+<div id="cursor-dot" class="fixed top-0 left-0 w-[10px] h-[10px] rounded-full bg-accent pointer-events-none z-[60] opacity-0 [mix-blend-mode:difference] transition-[width,height,opacity] duration-300 ease-oblique -translate-x-1/2 -translate-y-1/2" aria-hidden="true"></div>
+<div id="scroll-progress" class="fixed top-0 left-0 h-[2px] w-0 bg-accent z-50 transition-[width] duration-100 ease-linear" aria-hidden="true"></div>
 
 <!-- ============ HEADER ============ -->
-<header id="site-header" class="fixed top-0 left-0 w-full z-40">
+<header id="site-header" class="fixed top-0 left-0 w-full z-40 border-b border-transparent transition-[transform,background-color,border-color] duration-500 ease-oblique">
   <div class="flex items-center justify-between px-6 md:px-10 py-5">
-    <a href="#top" class="brand">
-      <img src="assets/02 BIANCO EXPORT.svg" alt="The Oblique Project" class="brand-logo"
+    <a href="#top" class="flex items-center gap-[.6rem]">
+      <img src="assets/01 NERO EXPORT.svg" alt="The Oblique Project" class="h-14 md:h-20 w-auto block"
            onload="this.nextElementSibling.style.display='none'"
            onerror="this.style.display='none'">
-      <span class="wordmark">The <em>Oblique</em> Project</span>
+      <span class="font-serif text-sm md:text-base tracking-tight">The <em>Oblique</em> Project</span>
     </a>
 
     <nav class="hidden md:flex items-center gap-10 text-sm text-muted">
@@ -55,20 +78,20 @@
     </nav>
 
     <button id="menu-toggle" class="md:hidden flex flex-col gap-[5px] w-6" aria-label="Open menu" aria-expanded="false">
-      <span class="menu-bar"></span>
-      <span class="menu-bar"></span>
+      <span class="menu-bar h-px w-full bg-fg block transition-transform duration-300 ease-oblique"></span>
+      <span class="menu-bar h-px w-full bg-fg block transition-transform duration-300 ease-oblique"></span>
     </button>
   </div>
 </header>
 
-<div id="mobile-nav" class="fixed inset-0 z-30 flex flex-col items-center justify-center gap-8 text-3xl font-serif italic">
+<div id="mobile-nav" class="fixed inset-0 z-30 flex flex-col items-center justify-center gap-8 text-3xl font-serif italic bg-bgdeep opacity-0 pointer-events-none -translate-y-2 transition-[opacity,transform] duration-400 ease-oblique">
   <a href="#work" class="mobile-link">Work</a>
   <a href="#studio" class="mobile-link">Studio</a>
   <a href="#contact" class="mobile-link">Contact</a>
 </div>
 
 <!-- ============ HERO ============ -->
-<section id="top" class="relative min-h-[100svh] flex flex-col justify-between px-6 md:px-10 pt-28 pb-8 overflow-hidden">
+<section id="top" class="relative min-h-[100svh] flex flex-col justify-between px-6 md:px-10 pt-32 md:pt-40 pb-8 overflow-hidden">
 
   <div class="flex items-start justify-between text-xs text-muted">
     <p class="max-w-[10rem] leading-snug">Open for freelance<br>work &amp; collaborations</p>
@@ -76,44 +99,46 @@
   </div>
 
   <div class="flex-1 flex items-center justify-center text-center">
-    <h1 class="hero-title" data-reveal>
+    <h1 class="animate-reveal font-serif font-light text-[clamp(2.6rem,8vw,6.4rem)] leading-[0.98] tracking-[-0.02em]">
       Identity built<br>
-      at a <em>slight</em><br>
+      at a <em class="text-accent font-normal">slight</em><br>
       angle.
     </h1>
   </div>
 
   <div class="flex items-end justify-between text-xs text-muted">
     <p class="max-w-[13rem] leading-snug">Brand identity, visual communication &amp; strategic design — since 2019.</p>
-    <a href="#work" class="scroll-cue flex flex-col items-center gap-2 text-muted">
+    <a href="#work" class="flex flex-col items-center gap-2 text-muted text-xs">
       <span>Scroll</span>
-      <span class="scroll-line"></span>
+      <span class="w-px h-8 bg-muted overflow-hidden relative">
+        <span class="absolute -top-full left-0 w-full h-full bg-accent animate-scrolldrip"></span>
+      </span>
     </a>
   </div>
 </section>
 
 <!-- ticker strip -->
 <div class="w-full border-y border-line py-3 overflow-hidden">
-  <div class="ticker-track whitespace-nowrap inline-block">
-    <span class="ticker-text">
-      Social Media Management &nbsp;&nbsp;|&nbsp;&nbsp; Branding &nbsp;&nbsp;|&nbsp;&nbsp; Art Direction &nbsp;&nbsp;|&nbsp;&nbsp; Editorial &nbsp;&nbsp;|&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;|&nbsp;&nbsp;
-      Social Media Management &nbsp;&nbsp;|&nbsp;&nbsp; Branding &nbsp;&nbsp;|&nbsp;&nbsp; Art Direction &nbsp;&nbsp;|&nbsp;&nbsp; Editorial &nbsp;&nbsp;|&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;|&nbsp;&nbsp;
-      Social Media Management &nbsp;&nbsp;|&nbsp;&nbsp; Branding &nbsp;&nbsp;|&nbsp;&nbsp; Art Direction &nbsp;&nbsp;|&nbsp;&nbsp; Editorial &nbsp;&nbsp;|&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;|&nbsp;&nbsp;
-      Social Media Management &nbsp;&nbsp;|&nbsp;&nbsp; Branding &nbsp;&nbsp;|&nbsp;&nbsp; Art Direction &nbsp;&nbsp;|&nbsp;&nbsp; Editorial &nbsp;&nbsp;|&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;|&nbsp;&nbsp;
-      Social Media Management &nbsp;&nbsp;|&nbsp;&nbsp; Branding &nbsp;&nbsp;|&nbsp;&nbsp; Art Direction &nbsp;&nbsp;|&nbsp;&nbsp; Editorial &nbsp;&nbsp;|&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;|&nbsp;&nbsp;
-      Social Media Management &nbsp;&nbsp;|&nbsp;&nbsp; Branding &nbsp;&nbsp;|&nbsp;&nbsp; Art Direction &nbsp;&nbsp;|&nbsp;&nbsp; Editorial &nbsp;&nbsp;|&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;|&nbsp;&nbsp;
-      Social Media Management &nbsp;&nbsp;|&nbsp;&nbsp; Branding &nbsp;&nbsp;|&nbsp;&nbsp; Art Direction &nbsp;&nbsp;|&nbsp;&nbsp; Editorial &nbsp;&nbsp;|&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;|&nbsp;&nbsp;
-      Social Media Management &nbsp;&nbsp;|&nbsp;&nbsp; Branding &nbsp;&nbsp;|&nbsp;&nbsp; Art Direction &nbsp;&nbsp;|&nbsp;&nbsp; Editorial &nbsp;&nbsp;|&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;|&nbsp;&nbsp;
+  <div class="ticker-track whitespace-nowrap inline-block animate-ticker">
+    <span class="ticker-text text-[0.78rem] font-semibold tracking-[0.12em] text-accent">
+      SOCIAL MEDIA MANAGEMENT &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; ART DIRECTION &nbsp;&nbsp;|&nbsp;&nbsp; EDITORIAL &nbsp;&nbsp;|&nbsp;&nbsp; VISUAL IDENTITY &nbsp;&nbsp;|&nbsp;&nbsp;
+      SOCIAL MEDIA MANAGEMENT &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; ART DIRECTION &nbsp;&nbsp;|&nbsp;&nbsp; EDITORIAL &nbsp;&nbsp;|&nbsp;&nbsp; VISUAL IDENTITY &nbsp;&nbsp;|&nbsp;&nbsp;
+      SOCIAL MEDIA MANAGEMENT &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; ART DIRECTION &nbsp;&nbsp;|&nbsp;&nbsp; EDITORIAL &nbsp;&nbsp;|&nbsp;&nbsp; VISUAL IDENTITY &nbsp;&nbsp;|&nbsp;&nbsp;
+      SOCIAL MEDIA MANAGEMENT &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; ART DIRECTION &nbsp;&nbsp;|&nbsp;&nbsp; EDITORIAL &nbsp;&nbsp;|&nbsp;&nbsp; VISUAL IDENTITY &nbsp;&nbsp;|&nbsp;&nbsp;
+      SOCIAL MEDIA MANAGEMENT &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; ART DIRECTION &nbsp;&nbsp;|&nbsp;&nbsp; EDITORIAL &nbsp;&nbsp;|&nbsp;&nbsp; VISUAL IDENTITY &nbsp;&nbsp;|&nbsp;&nbsp;
+      SOCIAL MEDIA MANAGEMENT &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; ART DIRECTION &nbsp;&nbsp;|&nbsp;&nbsp; EDITORIAL &nbsp;&nbsp;|&nbsp;&nbsp; VISUAL IDENTITY &nbsp;&nbsp;|&nbsp;&nbsp;
+      SOCIAL MEDIA MANAGEMENT &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; ART DIRECTION &nbsp;&nbsp;|&nbsp;&nbsp; EDITORIAL &nbsp;&nbsp;|&nbsp;&nbsp; VISUAL IDENTITY &nbsp;&nbsp;|&nbsp;&nbsp;
+      SOCIAL MEDIA MANAGEMENT &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; ART DIRECTION &nbsp;&nbsp;|&nbsp;&nbsp; EDITORIAL &nbsp;&nbsp;|&nbsp;&nbsp; VISUAL IDENTITY &nbsp;&nbsp;|&nbsp;&nbsp;
     </span>
-    <span class="ticker-text">
-      Social Media Management &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; Art Direction &nbsp;&nbsp;|&nbsp;&nbsp; Editorial &nbsp;&nbsp;|&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;|&nbsp;&nbsp;
-      Social Media Management &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; Art Direction &nbsp;&nbsp;|&nbsp;&nbsp; Editorial &nbsp;&nbsp;|&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;|&nbsp;&nbsp;
-      Social Media Management &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; Art Direction &nbsp;&nbsp;|&nbsp;&nbsp; Editorial &nbsp;&nbsp;|&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;|&nbsp;&nbsp;
-      Social Media Management &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; Art Direction &nbsp;&nbsp;|&nbsp;&nbsp; Editorial &nbsp;&nbsp;|&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;|&nbsp;&nbsp;
-      Social Media Management &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; Art Direction &nbsp;&nbsp;|&nbsp;&nbsp; Editorial &nbsp;&nbsp;|&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;|&nbsp;&nbsp;
-      Social Media Management &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; Art Direction &nbsp;&nbsp;|&nbsp;&nbsp; Editorial &nbsp;&nbsp;|&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;|&nbsp;&nbsp;
-      Social Media Management &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; Art Direction &nbsp;&nbsp;|&nbsp;&nbsp; Editorial &nbsp;&nbsp;|&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;|&nbsp;&nbsp;
-      Social Media Management &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; Art Direction &nbsp;&nbsp;|&nbsp;&nbsp; Editorial &nbsp;&nbsp;|&nbsp;&nbsp; Visual Identity &nbsp;&nbsp;|&nbsp;&nbsp;
+    <span class="ticker-text text-[0.78rem] font-semibold tracking-[0.12em] text-accent">
+      SOCIAL MEDIA MANAGEMENT &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; ART DIRECTION &nbsp;&nbsp;|&nbsp;&nbsp; EDITORIAL &nbsp;&nbsp;|&nbsp;&nbsp; VISUAL IDENTITY &nbsp;&nbsp;|&nbsp;&nbsp;
+      SOCIAL MEDIA MANAGEMENT &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; ART DIRECTION &nbsp;&nbsp;|&nbsp;&nbsp; EDITORIAL &nbsp;&nbsp;|&nbsp;&nbsp; VISUAL IDENTITY &nbsp;&nbsp;|&nbsp;&nbsp;
+      SOCIAL MEDIA MANAGEMENT &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; ART DIRECTION &nbsp;&nbsp;|&nbsp;&nbsp; EDITORIAL &nbsp;&nbsp;|&nbsp;&nbsp; VISUAL IDENTITY &nbsp;&nbsp;|&nbsp;&nbsp;
+      SOCIAL MEDIA MANAGEMENT &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; ART DIRECTION &nbsp;&nbsp;|&nbsp;&nbsp; EDITORIAL &nbsp;&nbsp;|&nbsp;&nbsp; VISUAL IDENTITY &nbsp;&nbsp;|&nbsp;&nbsp;
+      SOCIAL MEDIA MANAGEMENT &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; ART DIRECTION &nbsp;&nbsp;|&nbsp;&nbsp; EDITORIAL &nbsp;&nbsp;|&nbsp;&nbsp; VISUAL IDENTITY &nbsp;&nbsp;|&nbsp;&nbsp;
+      SOCIAL MEDIA MANAGEMENT &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; ART DIRECTION &nbsp;&nbsp;|&nbsp;&nbsp; EDITORIAL &nbsp;&nbsp;|&nbsp;&nbsp; VISUAL IDENTITY &nbsp;&nbsp;|&nbsp;&nbsp;
+      SOCIAL MEDIA MANAGEMENT &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; ART DIRECTION &nbsp;&nbsp;|&nbsp;&nbsp; EDITORIAL &nbsp;&nbsp;|&nbsp;&nbsp; VISUAL IDENTITY &nbsp;&nbsp;|&nbsp;&nbsp;
+      SOCIAL MEDIA MANAGEMENT &nbsp;&nbsp;|&nbsp;&nbsp; BRANDING &nbsp;&nbsp;|&nbsp;&nbsp; ART DIRECTION &nbsp;&nbsp;|&nbsp;&nbsp; EDITORIAL &nbsp;&nbsp;|&nbsp;&nbsp; VISUAL IDENTITY &nbsp;&nbsp;|&nbsp;&nbsp;
     </span>
   </div>
 </div>
@@ -121,132 +146,152 @@
 <!-- ============ WORK ============ -->
 <section id="work" class="px-6 md:px-10 py-24 md:py-32">
   <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
-    <h2 class="section-title">Selected<br><em>work</em></h2>
+    <h2 class="font-serif font-light text-[clamp(2rem,5vw,3.4rem)] leading-[1.02] tracking-[-0.01em]">
+      Selected<br><em class="text-fg font-normal">work</em>
+    </h2>
     <p class="hidden md:block text-xs text-muted max-w-[13rem] text-right">Hold and drag to explore. Click a project to open it.</p>
   </div>
 
-  <div class="work-filters" role="tablist" aria-label="Filter work by type">
-    <button class="filter-btn is-active" data-filter="all" role="tab" aria-selected="true">All</button>
-    <button class="filter-btn" data-filter="photography" role="tab" aria-selected="false">Photography</button>
-    <button class="filter-btn" data-filter="video" role="tab" aria-selected="false">Video</button>
-    <button class="filter-btn" data-filter="graphic" role="tab" aria-selected="false">Graphic</button>
+  <div class="flex gap-2 flex-wrap mb-8" role="tablist" aria-label="Filter work by type">
+    <button class="filter-btn text-[0.78rem] px-[1.1rem] py-2 rounded-full border border-accent bg-accent text-bgdeep transition-colors duration-200" data-filter="all" role="tab" aria-selected="true">All</button>
+    <button class="filter-btn text-[0.78rem] px-[1.1rem] py-2 rounded-full border border-line text-muted hover:text-fg hover:border-fg transition-colors duration-200" data-filter="photography" role="tab" aria-selected="false">Photography</button>
+    <button class="filter-btn text-[0.78rem] px-[1.1rem] py-2 rounded-full border border-line text-muted hover:text-fg hover:border-fg transition-colors duration-200" data-filter="video" role="tab" aria-selected="false">Video</button>
+    <button class="filter-btn text-[0.78rem] px-[1.1rem] py-2 rounded-full border border-line text-muted hover:text-fg hover:border-fg transition-colors duration-200" data-filter="graphic" role="tab" aria-selected="false">Graphic</button>
   </div>
 
-  <div class="work-track" data-drag-scroll>
+  <div class="work-track no-scrollbar flex items-start gap-4 md:gap-8 overflow-x-auto pb-2 cursor-grab" data-drag-scroll>
 
-    <button type="button" class="work-card" data-category="graphic"
+    <button type="button" class="group work-card flex-none block" data-category="graphic"
       data-title="Meridian" data-tag="Graphic — Identity"
       data-desc="A hospitality brand identity built around warm minimalism: a restrained mark, a custom serif for signage, and a palette drawn from natural stone and linen."
-      data-images="assets/work-01.jpg" style="--w:22vw;--wmin:280px">
-      <div class="work-img"><span class="work-hover-label">Meridian</span></div>
+      data-images="assets/work-01.jpg" style="width:22vw;min-width:280px">
+      <div class="work-img relative aspect-[3/4] overflow-hidden bg-accent bg-cover bg-center transform scale-100 transition-transform duration-500 ease-oblique group-hover:scale-[1.045]">
+        <span class="work-hover-label absolute inset-0 flex items-end p-4 font-serif italic text-fg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-oblique bg-[linear-gradient(0deg,rgba(20,20,20,.75),transparent_55%)]">Meridian</span>
+      </div>
     </button>
 
-    <button type="button" class="work-card mt-10" data-category="graphic"
+    <button type="button" class="group work-card flex-none block mt-10" data-category="graphic"
       data-title="Nord Studio" data-tag="Graphic — Editorial"
       data-desc="An editorial system for an architecture studio: a modular grid, a single display cut, and a printed journal released twice a year."
-      data-images="assets/work-02.jpg" style="--w:16vw;--wmin:220px">
-      <div class="work-img"><span class="work-hover-label">Nord Studio</span></div>
+      data-images="assets/work-02.jpg" style="width:16vw;min-width:220px">
+      <div class="work-img relative aspect-[3/4] overflow-hidden bg-accent bg-cover bg-center transform scale-100 transition-transform duration-500 ease-oblique group-hover:scale-[1.045]">
+        <span class="work-hover-label absolute inset-0 flex items-end p-4 font-serif italic text-fg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-oblique bg-[linear-gradient(0deg,rgba(20,20,20,.75),transparent_55%)]">Nord Studio</span>
+      </div>
     </button>
 
-    <button type="button" class="work-card" data-category="graphic"
+    <button type="button" class="group work-card flex-none block" data-category="graphic"
       data-title="Alba" data-tag="Graphic — Web &amp; Brand"
       data-desc="A digital identity and site for an architecture collective, translating their concrete-and-light material language into type, motion and layout."
-      data-images="assets/work-03.jpg" style="--w:24vw;--wmin:300px">
-      <div class="work-img"><span class="work-hover-label">Alba</span></div>
+      data-images="assets/work-03.jpg" style="width:24vw;min-width:300px">
+      <div class="work-img relative aspect-[3/4] overflow-hidden bg-accent bg-cover bg-center transform scale-100 transition-transform duration-500 ease-oblique group-hover:scale-[1.045]">
+        <span class="work-hover-label absolute inset-0 flex items-end p-4 font-serif italic text-fg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-oblique bg-[linear-gradient(0deg,rgba(20,20,20,.75),transparent_55%)]">Alba</span>
+      </div>
     </button>
 
-    <button type="button" class="work-card mt-6" data-category="graphic"
+    <button type="button" class="group work-card flex-none block mt-6" data-category="graphic"
       data-title="Onda" data-tag="Graphic — Packaging"
       data-desc="Packaging system for a small-batch skincare line: a wave-derived mark, recyclable stock, and a colour code that shifts with each product family."
-      data-images="assets/work-04.jpg" style="--w:16vw;--wmin:220px">
-      <div class="work-img"><span class="work-hover-label">Onda</span></div>
+      data-images="assets/work-04.jpg" style="width:16vw;min-width:220px">
+      <div class="work-img relative aspect-[3/4] overflow-hidden bg-accent bg-cover bg-center transform scale-100 transition-transform duration-500 ease-oblique group-hover:scale-[1.045]">
+        <span class="work-hover-label absolute inset-0 flex items-end p-4 font-serif italic text-fg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-oblique bg-[linear-gradient(0deg,rgba(20,20,20,.75),transparent_55%)]">Onda</span>
+      </div>
     </button>
 
-    <button type="button" class="work-card" data-category="graphic"
+    <button type="button" class="group work-card flex-none block" data-category="graphic"
       data-title="Isonae" data-tag="Graphic — Event Poster"
       data-desc="Event poster for La Fenice's ISONAE night: gestural hands sprayed over a two-tone gradient, with a single bold display cut carrying the name."
-      data-images="assets/POSTER1.png,assets/POSTER2.png,assets/POSTER3.png" style="--w:18vw;--wmin:240px">
-      <div class="work-img"><span class="work-hover-label">Isonae</span></div>
+      data-images="assets/POSTER1.png,assets/POSTER2.png,assets/POSTER3.png" style="width:18vw;min-width:240px">
+      <div class="work-img relative aspect-[3/4] overflow-hidden bg-accent bg-cover bg-center transform scale-100 transition-transform duration-500 ease-oblique group-hover:scale-[1.045]">
+        <span class="work-hover-label absolute inset-0 flex items-end p-4 font-serif italic text-fg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-oblique bg-[linear-gradient(0deg,rgba(20,20,20,.75),transparent_55%)]">Isonae</span>
+      </div>
     </button>
 
-    <button type="button" class="work-card mt-8" data-category="video"
+    <button type="button" class="group work-card flex-none block mt-8" data-category="video"
       data-title="Tandem" data-tag="Video — Campaign"
       data-desc="A 30-second advertising campaign built around split-screen pairings — two products, two audiences, one shared idea."
-      data-images="assets/work-06.jpg" style="--w:22vw;--wmin:280px">
-      <div class="work-img"><span class="work-hover-label">Tandem</span></div>
+      data-images="assets/work-06.jpg" style="width:22vw;min-width:280px">
+      <div class="work-img relative aspect-[3/4] overflow-hidden bg-accent bg-cover bg-center transform scale-100 transition-transform duration-500 ease-oblique group-hover:scale-[1.045]">
+        <span class="work-hover-label absolute inset-0 flex items-end p-4 font-serif italic text-fg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-oblique bg-[linear-gradient(0deg,rgba(20,20,20,.75),transparent_55%)]">Tandem</span>
+      </div>
     </button>
 
-    <button type="button" class="work-card" data-category="video"
+    <button type="button" class="group work-card flex-none block" data-category="video"
       data-title="Nebula" data-tag="Video — Motion reel"
       data-desc="A motion identity reel exploring particle systems and slow-release typography for a music label's live visuals."
-      data-images="assets/work-08.jpg" style="--w:16vw;--wmin:220px">
-      <div class="work-img"><span class="work-hover-label">Nebula</span></div>
+      data-images="assets/work-08.jpg" style="width:16vw;min-width:220px">
+      <div class="work-img relative aspect-[3/4] overflow-hidden bg-accent bg-cover bg-center transform scale-100 transition-transform duration-500 ease-oblique group-hover:scale-[1.045]">
+        <span class="work-hover-label absolute inset-0 flex items-end p-4 font-serif italic text-fg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-oblique bg-[linear-gradient(0deg,rgba(20,20,20,.75),transparent_55%)]">Nebula</span>
+      </div>
     </button>
 
-    <button type="button" class="work-card mt-6" data-category="photography"
+    <button type="button" class="group work-card flex-none block mt-6" data-category="photography"
       data-title="Solstice" data-tag="Photography — Studio session"
       data-desc="A studio photography session exploring hard shadow and negative space, shot for a dance company's season announcement."
-      data-images="assets/work-07.jpg" style="--w:14vw;--wmin:200px">
-      <div class="work-img"><span class="work-hover-label">Solstice</span></div>
+      data-images="assets/work-07.jpg" style="width:14vw;min-width:200px">
+      <div class="work-img relative aspect-[3/4] overflow-hidden bg-accent bg-cover bg-center transform scale-100 transition-transform duration-500 ease-oblique group-hover:scale-[1.045]">
+        <span class="work-hover-label absolute inset-0 flex items-end p-4 font-serif italic text-fg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-oblique bg-[linear-gradient(0deg,rgba(20,20,20,.75),transparent_55%)]">Solstice</span>
+      </div>
     </button>
 
-    <button type="button" class="work-card" data-category="photography"
+    <button type="button" class="group work-card flex-none block" data-category="photography"
       data-title="Aria" data-tag="Photography — Portrait series"
       data-desc="A portrait series for an independent record label, photographed on location with natural light and minimal retouching."
-      data-images="assets/work-09.jpg" style="--w:18vw;--wmin:240px">
-      <div class="work-img"><span class="work-hover-label">Aria</span></div>
+      data-images="assets/work-09.jpg" style="width:18vw;min-width:240px">
+      <div class="work-img relative aspect-[3/4] overflow-hidden bg-accent bg-cover bg-center transform scale-100 transition-transform duration-500 ease-oblique group-hover:scale-[1.045]">
+        <span class="work-hover-label absolute inset-0 flex items-end p-4 font-serif italic text-fg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-oblique bg-[linear-gradient(0deg,rgba(20,20,20,.75),transparent_55%)]">Aria</span>
+      </div>
     </button>
 
   </div>
 </section>
 
 <!-- work modal / carousel -->
-<div id="work-modal" class="work-modal" aria-hidden="true">
-  <div class="work-modal-backdrop" data-modal-close></div>
-  <div class="work-modal-inner" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <button type="button" class="modal-close" data-modal-close aria-label="Close">×</button>
+<div id="work-modal" class="work-modal fixed inset-0 z-[70] flex items-center justify-center p-6 opacity-0 pointer-events-none transition-opacity duration-300 ease-oblique" aria-hidden="true">
+  <div class="absolute inset-0 bg-[rgba(20,20,20,0.88)] [backdrop-filter:blur(4px)]" data-modal-close></div>
+  <div class="work-modal-inner relative bg-bg border border-line max-w-[960px] w-full max-h-[88vh] grid grid-cols-1 md:grid-cols-[1.3fr_1fr] overflow-hidden translate-y-3 transition-transform duration-300 ease-oblique" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button type="button" class="absolute top-3 right-3 z-10 text-2xl leading-none text-fg hover:text-accent transition-colors w-[34px] h-[34px] flex items-center justify-center" data-modal-close aria-label="Close">×</button>
 
-    <div class="modal-media">
-      <button type="button" class="modal-nav modal-prev-img" aria-label="Previous image">‹</button>
-      <img id="modal-img" src="" alt="">
-      <button type="button" class="modal-nav modal-next-img" aria-label="Next image">›</button>
-      <div class="modal-dots" id="modal-dots"></div>
+    <div class="relative bg-bgdeep flex items-center justify-center min-h-[220px] md:min-h-[260px]">
+      <button type="button" class="modal-prev-img absolute top-1/2 left-3 -translate-y-1/2 w-9 h-9 rounded-full bg-[rgba(20,20,20,0.6)] text-fg flex items-center justify-center text-xl hover:bg-accent hover:text-bgdeep transition-colors" aria-label="Previous image">‹</button>
+      <img id="modal-img" src="" alt="" class="w-full h-full object-cover block">
+      <button type="button" class="modal-next-img absolute top-1/2 right-3 -translate-y-1/2 w-9 h-9 rounded-full bg-[rgba(20,20,20,0.6)] text-fg flex items-center justify-center text-xl hover:bg-accent hover:text-bgdeep transition-colors" aria-label="Next image">›</button>
+      <div id="modal-dots" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-[.4rem]"></div>
     </div>
 
-    <div class="modal-info">
-      <p class="modal-tag" id="modal-tag"></p>
-      <h3 id="modal-title"></h3>
-      <p id="modal-desc"></p>
-      <div class="modal-project-nav">
-        <button type="button" class="modal-project-prev" id="modal-project-prev">← Previous project</button>
-        <button type="button" class="modal-project-next" id="modal-project-next">Next project →</button>
+    <div class="p-6 md:p-10 flex flex-col justify-center overflow-y-auto">
+      <p id="modal-tag" class="text-xs text-muted mb-3"></p>
+      <h3 id="modal-title" class="font-serif italic text-[clamp(1.5rem,3vw,2.1rem)] text-accent mb-4"></h3>
+      <p id="modal-desc" class="text-[0.92rem] leading-[1.6] text-fg"></p>
+      <div class="flex justify-between gap-4 mt-8 pt-5 border-t border-line text-[0.78rem] text-muted">
+        <button type="button" id="modal-project-prev" class="hover:text-accent transition-colors">← Previous project</button>
+        <button type="button" id="modal-project-next" class="hover:text-accent transition-colors">Next project →</button>
       </div>
     </div>
   </div>
 </div>
 
 <!-- ============ STUDIO / ABOUT (diagonal split) ============ -->
-<section id="studio" class="diagonal-section">
-  <div class="diagonal-panel diagonal-panel--dark">
-    <p class="statement">
+<section id="studio" class="relative grid grid-cols-1 md:grid-cols-2 min-h-[92vh] md:min-h-[92vh] border-y border-line overflow-hidden">
+  <div class="flex items-center px-6 md:px-[clamp(1.5rem,6vw,5rem)] py-14 bg-bg md:[clip-path:polygon(0_0,100%_0,88%_100%,0_100%)]">
+    <p class="font-serif font-light text-[clamp(1.4rem,3vw,2.1rem)] leading-[1.25] max-w-[26ch]">
       We are an independent creative studio focused on
-      <em>brand identity</em>, <em>visual communication</em> and
-      <em>strategic design</em>.
+      <em class="text-accent font-medium">brand identity</em>, <em class="text-accent font-medium">visual communication</em> and
+      <em class="text-accent font-medium">strategic design</em>.
     </p>
   </div>
-  <div class="diagonal-panel diagonal-panel--accent">
-    <ol class="process-list">
+  <div class="flex items-center justify-center px-6 md:pl-[clamp(4.5rem,12vw,9rem)] md:pr-[clamp(1.5rem,6vw,5rem)] py-14 bg-accent text-bgdeep md:-ml-[12%] md:[clip-path:polygon(12%_0,100%_0,100%_100%,0_100%)]">
+    <ol class="flex flex-col gap-9 max-w-[28ch] text-center mx-auto">
       <li>
-        <span class="process-index">01 — Research</span>
-        <p>We study the market, the industry and the brand's position within it.</p>
+        <span class="block font-serif italic text-[1.15rem] mb-[.35rem]">01 — Research</span>
+        <p class="text-[0.92rem] leading-[1.5] text-bgdeep/80">We study the market, the industry and the brand's position within it.</p>
       </li>
       <li>
-        <span class="process-index">02 — Strategy</span>
-        <p>We define a clear direction and a strategic foundation to build on.</p>
+        <span class="block font-serif italic text-[1.15rem] mb-[.35rem]">02 — Strategy</span>
+        <p class="text-[0.92rem] leading-[1.5] text-bgdeep/80">We define a clear direction and a strategic foundation to build on.</p>
       </li>
       <li>
-        <span class="process-index">03 — Design</span>
-        <p>We translate that strategy into a coherent, distinctive visual system.</p>
+        <span class="block font-serif italic text-[1.15rem] mb-[.35rem]">03 — Design</span>
+        <p class="text-[0.92rem] leading-[1.5] text-bgdeep/80">We translate that strategy into a coherent, distinctive visual system.</p>
       </li>
     </ol>
   </div>
@@ -254,46 +299,46 @@
 
 <!-- ============ CONTACT ============ -->
 <section id="contact" class="px-6 md:px-10 py-28 md:py-32">
-  <p class="year-label mb-6">Contact</p>
-  <a href="mailto:hello@theobliqueproject.com" class="contact-title block">
-    Let's build<br>something <em>oblique</em>.
+  <p class="text-xs text-muted tracking-[0.02em] mb-6">Contact</p>
+  <a href="mailto:hello@theobliqueproject.com" class="block font-serif font-light text-[clamp(2.4rem,9vw,6rem)] leading-[0.98] tracking-[-0.02em] transition-colors duration-300 ease-oblique hover:text-accent group">
+    Let's build<br>something <em class="group-hover:text-fg">oblique</em>.
   </a>
 
-  <div class="contact-grid">
+  <div class="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-8 md:gap-16 mt-12 md:mt-20 items-start">
 
     <!-- contact form -->
-    <form class="contact-form" action="https://formsubmit.co/hello@theobliqueproject.com" method="POST">
+    <form class="contact-form flex flex-col gap-5" action="https://formsubmit.co/hello@theobliqueproject.com" method="POST">
       <input type="hidden" name="_subject" value="New inquiry — The Oblique Project">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
 
-      <label class="form-row">
+      <label class="flex flex-col gap-[.4rem] text-[0.78rem] text-muted">
         <span>Name</span>
-        <input type="text" name="name" required>
+        <input type="text" name="name" required class="bg-transparent border-0 border-b border-line text-fg font-sans text-[0.95rem] py-[.55rem] focus:outline-none focus:border-accent transition-colors">
       </label>
-      <label class="form-row">
+      <label class="flex flex-col gap-[.4rem] text-[0.78rem] text-muted">
         <span>Email</span>
-        <input type="email" name="email" required>
+        <input type="email" name="email" required class="bg-transparent border-0 border-b border-line text-fg font-sans text-[0.95rem] py-[.55rem] focus:outline-none focus:border-accent transition-colors">
       </label>
-      <label class="form-row">
+      <label class="flex flex-col gap-[.4rem] text-[0.78rem] text-muted">
         <span>Message</span>
-        <textarea name="message" rows="5" required></textarea>
+        <textarea name="message" rows="5" required class="bg-transparent border-0 border-b border-line text-fg font-sans text-[0.95rem] py-[.55rem] resize-y focus:outline-none focus:border-accent transition-colors"></textarea>
       </label>
 
-      <button type="submit" class="form-submit">Send message</button>
-      <p class="form-note">Replying to hello@theobliqueproject.com — swap this for your real address in index.html.</p>
-      <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      <button type="submit" class="form-submit self-start mt-2 px-7 py-[.8rem] bg-accent text-bgdeep text-[0.85rem] font-semibold tracking-[0.01em] transition-transform duration-300 ease-oblique hover:-translate-y-0.5">Send message</button>
+      <p class="text-[0.72rem] text-muted leading-[1.4]">Replying to hello@theobliqueproject.com — swap this for your real address in index.html.</p>
+      <p class="form-status text-[0.78rem] min-h-[1rem]" id="form-status" role="status" aria-live="polite"></p>
     </form>
 
     <!-- playground: tetris -->
-    <div class="tetris-panel">
-      <div class="tetris-head">
-        <p class="year-label mb-0">Playground</p>
-        <p class="tetris-score">Score <span id="tetris-score">0</span></p>
+    <div class="border border-line p-6 flex flex-col items-center gap-4">
+      <div class="flex items-center justify-between w-full">
+        <p class="text-xs text-muted mb-0">Playground</p>
+        <p class="text-[0.78rem] text-muted">Score <span id="tetris-score" class="text-accent font-semibold">0</span></p>
       </div>
-      <p class="tetris-tagline">While you decide whether to work with us, play a round of Tetris.</p>
-      <canvas id="tetris-canvas" width="200" height="360" tabindex="0"></canvas>
-      <p class="tetris-hint">Click the board, then use ← → to move, ↓ soft drop, ↑ rotate, space to hard drop.</p>
+      <p class="font-serif italic text-[0.95rem] text-fg text-center max-w-[26ch] leading-[1.4]">While you decide whether to work with us, play a round of Tetris.</p>
+      <canvas id="tetris-canvas" width="200" height="360" tabindex="0" class="bg-bgdeep border border-line outline-none focus:border-accent"></canvas>
+      <p class="text-[0.72rem] text-muted text-center leading-[1.5]">Click the board, then use ← → to move, ↓ soft drop, ↑ rotate, space to hard drop.</p>
     </div>
 
   </div>
@@ -312,13 +357,13 @@
 </section>
 
 <!-- form confirmation popup -->
-<div id="form-popup" class="form-popup" aria-hidden="true">
-  <div class="form-popup-backdrop" data-popup-close></div>
-  <div class="form-popup-card" role="alertdialog" aria-live="assertive">
-    <button type="button" class="modal-close" data-popup-close aria-label="Close">×</button>
-    <div class="form-popup-icon" id="form-popup-icon">✓</div>
-    <p class="form-popup-title" id="form-popup-title">Message sent</p>
-    <p class="form-popup-text" id="form-popup-text">Thanks for reaching out — we'll get back to you soon.</p>
+<div id="form-popup" class="fixed inset-0 z-[80] flex items-center justify-center p-6 opacity-0 pointer-events-none transition-opacity duration-300 ease-oblique" aria-hidden="true">
+  <div class="absolute inset-0 bg-[rgba(20,20,20,0.88)] [backdrop-filter:blur(4px)]" data-popup-close></div>
+  <div class="form-popup-card relative bg-bg border border-accent p-[clamp(2rem,5vw,3rem)] max-w-[380px] w-full text-center translate-y-3 scale-[0.98] transition-transform duration-300 ease-oblique" role="alertdialog" aria-live="assertive">
+    <button type="button" class="absolute top-3 right-3 text-2xl leading-none text-fg hover:text-accent transition-colors w-[34px] h-[34px] flex items-center justify-center" data-popup-close aria-label="Close">×</button>
+    <div id="form-popup-icon" class="w-[46px] h-[46px] mx-auto mb-5 rounded-full bg-accent text-bgdeep flex items-center justify-center text-xl font-semibold">✓</div>
+    <p id="form-popup-title" class="font-serif italic text-[1.4rem] text-fg mb-[.6rem]">Message sent</p>
+    <p id="form-popup-text" class="text-[0.85rem] text-muted leading-[1.5]">Thanks for reaching out — we'll get back to you soon.</p>
   </div>
 </div>
 
