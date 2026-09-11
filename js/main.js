@@ -111,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.add('is-active');
       btn.setAttribute('aria-selected', 'true');
       applyFilter(btn.dataset.filter);
+      document.querySelector('.work-track')?.scrollTo({ left: 0, behavior: 'smooth' });
     });
   });
 
@@ -140,6 +141,31 @@ document.addEventListener('DOMContentLoaded', () => {
         openModal(card);
       });
     });
+
+    /* auto-scroll: slow continuous drift, pauses on hover/drag/touch */
+    if (!reduceMotion) {
+      let paused = false;
+      let dir = 1;
+      const speed = 0.5; // px per frame
+
+      track.addEventListener('mouseenter', () => { paused = true; });
+      track.addEventListener('mouseleave', () => { paused = false; });
+      track.addEventListener('touchstart', () => { paused = true; }, { passive: true });
+      track.addEventListener('touchend', () => { setTimeout(() => { paused = false; }, 1500); });
+
+      const autoScroll = () => {
+        if (!paused && !isDown) {
+          const max = track.scrollWidth - track.clientWidth;
+          if (max > 0) {
+            track.scrollLeft += speed * dir;
+            if (track.scrollLeft >= max) dir = -1;
+            if (track.scrollLeft <= 0) dir = 1;
+          }
+        }
+        requestAnimationFrame(autoScroll);
+      };
+      requestAnimationFrame(autoScroll);
+    }
   });
 
   /* ---------------- Work: modal carousel ---------------- */
@@ -402,11 +428,13 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = 'rgba(20,20,20,0.82)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = '#f4f3ee';
-        ctx.font = '14px Inter, sans-serif';
+        ctx.font = 'italic 14px Fraunces, serif';
         ctx.textAlign = 'center';
-        ctx.fillText('Game over', canvas.width / 2, canvas.height / 2 - 10);
+        ctx.fillText('You lost?', canvas.width / 2, canvas.height / 2 - 24);
+        ctx.fillText('Good — now send the email.', canvas.width / 2, canvas.height / 2 - 4);
         ctx.fillStyle = '#c6ff00';
-        ctx.fillText('Press Enter to restart', canvas.width / 2, canvas.height / 2 + 12);
+        ctx.font = '12px Inter, sans-serif';
+        ctx.fillText('Press Enter to try again', canvas.width / 2, canvas.height / 2 + 22);
       }
     }
 

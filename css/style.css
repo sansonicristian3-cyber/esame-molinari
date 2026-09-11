@@ -138,23 +138,19 @@ em{ font-family:'Fraunces', serif; font-style: italic; font-weight: 400; color: 
   60%,100%{ transform: translateY(200%); }
 }
 
-/* ---------- Marquee ---------- */
-.marquee-strip{ overflow: hidden; white-space: nowrap; }
-.marquee-track{
-  display: inline-flex;
-  align-items: center;
-  font-family:'Fraunces', serif;
-  font-style: italic;
-  font-size: 1rem;
+/* ---------- Ticker ---------- */
+.ticker-track{
+  animation: ticker-scroll 34s linear infinite;
+}
+.ticker-text{
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   color: var(--accent);
-  animation: marquee 26s linear infinite;
-  width: max-content;
+  padding-right: 0;
+  font-family: 'Fraunces', 'serif';
 }
-.marquee-track span{ padding: 0 1.25rem; position: relative; }
-.marquee-track span::after{
-  content: '—'; position: absolute; right: -1.25rem; color: var(--muted); font-style: normal;
-}
-@keyframes marquee{
+@keyframes ticker-scroll{
   from{ transform: translateX(0); }
   to{ transform: translateX(-50%); }
 }
@@ -466,6 +462,11 @@ em{ font-family:'Fraunces', serif; font-style: italic; font-weight: 400; color: 
 .tetris-head{ display:flex; align-items:center; justify-content:space-between; width: 100%; }
 .tetris-score{ font-size: 0.78rem; color: var(--muted); }
 .tetris-score span{ color: var(--accent); font-weight: 600; }
+.tetris-tagline{
+  font-family:'Fraunces', serif; font-style: italic;
+  font-size: 0.95rem; color: var(--fg); text-align: center;
+  max-width: 26ch; line-height: 1.4;
+}
 #tetris-canvas{
   background: var(--bgdeep);
   border: 1px solid var(--line);
