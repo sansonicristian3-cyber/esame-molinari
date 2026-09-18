@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (tickerTrack && !reduceMotion) {
     let tickerOffset = 0;
     let lastTickerY = window.scrollY;
-    const tickerFactor = 0.12; // lower = slower relative to scroll speed
+    const tickerFactor = 0.05; // lower = slower relative to scroll speed
 
     window.addEventListener('scroll', () => {
       const currentY = window.scrollY;
