@@ -62,24 +62,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------------- Ticker: moves only while the page scrolls, slowly ---------------- */
+  /* ---------------- Ticker: slow continuous autoplay, boosted while scrolling ---------------- */
   const tickerTrack = document.getElementById('ticker-track');
   if (tickerTrack && !reduceMotion) {
     let tickerOffset = 0;
     let lastTickerY = window.scrollY;
-    const tickerFactor = 0.05; // lower = slower relative to scroll speed
+    const baseSpeed = 0.15;    // px per frame — constant slow drift
+    const scrollFactor = 0.08; // extra px per px scrolled — temporary boost
+
+    function applyTicker() {
+      const halfWidth = tickerTrack.scrollWidth / 2;
+      if (halfWidth <= 0) return;
+      tickerOffset = ((tickerOffset % halfWidth) + halfWidth) % halfWidth;
+      tickerTrack.style.transform = `translateX(${-tickerOffset}px)`;
+    }
+
+    function tickerLoop() {
+      tickerOffset += baseSpeed;
+      applyTicker();
+      requestAnimationFrame(tickerLoop);
+    }
+    requestAnimationFrame(tickerLoop);
 
     window.addEventListener('scroll', () => {
       const currentY = window.scrollY;
-      const delta = currentY - lastTickerY;
+      tickerOffset += (currentY - lastTickerY) * scrollFactor;
       lastTickerY = currentY;
-
-      const halfWidth = tickerTrack.scrollWidth / 2;
-      if (halfWidth <= 0) return;
-
-      tickerOffset += delta * tickerFactor;
-      tickerOffset = ((tickerOffset % halfWidth) + halfWidth) % halfWidth;
-      tickerTrack.style.transform = `translateX(${-tickerOffset}px)`;
     }, { passive: true });
   }
 
