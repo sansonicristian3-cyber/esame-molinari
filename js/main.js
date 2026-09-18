@@ -62,24 +62,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------------- Marquee: clone content for a seamless loop ---------------- */
-  const marqueeTrack = document.getElementById('marquee-track');
-  if (marqueeTrack) {
-    const clone = marqueeTrack.cloneNode(true);
-    clone.setAttribute('aria-hidden', 'true');
-    marqueeTrack.parentNode.appendChild(clone);
-    // wrap both tracks so they scroll together as one flex row
-    const wrapper = document.createElement('div');
-    wrapper.style.display = 'inline-flex';
-    marqueeTrack.parentNode.insertBefore(wrapper, marqueeTrack);
-    wrapper.appendChild(marqueeTrack);
-    wrapper.appendChild(clone);
-    wrapper.classList.add('marquee-wrapper');
-    wrapper.style.animation = getComputedStyle(marqueeTrack).animation;
-    marqueeTrack.style.animation = 'none';
-    clone.style.animation = 'none';
-    wrapper.style.setProperty('animation', 'marquee 26s linear infinite');
-    if (reduceMotion) wrapper.style.animation = 'none';
+  /* ---------------- Ticker: moves only while the page scrolls, slowly ---------------- */
+  const tickerTrack = document.getElementById('ticker-track');
+  if (tickerTrack && !reduceMotion) {
+    let tickerOffset = 0;
+    let lastTickerY = window.scrollY;
+    const tickerFactor = 0.12; // lower = slower relative to scroll speed
+
+    window.addEventListener('scroll', () => {
+      const currentY = window.scrollY;
+      const delta = currentY - lastTickerY;
+      lastTickerY = currentY;
+
+      const halfWidth = tickerTrack.scrollWidth / 2;
+      if (halfWidth <= 0) return;
+
+      tickerOffset += delta * tickerFactor;
+      tickerOffset = ((tickerOffset % halfWidth) + halfWidth) % halfWidth;
+      tickerTrack.style.transform = `translateX(${-tickerOffset}px)`;
+    }, { passive: true });
   }
 
   /* ---------------- Work: image loader (first image = card thumbnail) ---------------- */
