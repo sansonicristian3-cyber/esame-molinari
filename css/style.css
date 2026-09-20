@@ -86,6 +86,16 @@ footer .nav-link:hover{ color: var(--bgdeep); opacity: 1; }
 .no-scrollbar::-webkit-scrollbar{ display: none; }
 .work-track.is-dragging{ cursor: grabbing; scroll-behavior: auto; user-select: none; }
 
+/* ---------- Work: editorial scroll composition ---------- */
+#work-canvas{ overflow: visible; }
+.parallax-item{
+  will-change: transform;
+  opacity: 0;
+  clip-path: inset(8% 0 8% 0);
+  transition: opacity .9s cubic-bezier(.16,.84,.44,1), clip-path 1s cubic-bezier(.16,.84,.44,1);
+}
+.parallax-item.is-revealed{ opacity: 1; clip-path: inset(0 0 0 0); }
+
 /* ---------- Work: card filtering + placeholder label ---------- */
 .work-card.is-hidden{ display: none; }
 .work-img.is-placeholder .work-hover-label{ color: var(--bgdeep); background: none; opacity: 1; }
@@ -122,4 +132,3 @@ footer .nav-link:hover{ color: var(--bgdeep); opacity: 1; }
   .work-card .work-img{ transition: none !important; }
   *{ transition-duration: 0.01ms !important; }
 }
-

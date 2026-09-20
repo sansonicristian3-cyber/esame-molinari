@@ -151,61 +151,15 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.add('is-active');
       btn.setAttribute('aria-selected', 'true');
       applyFilter(btn.dataset.filter);
-      document.querySelector('.work-track')?.scrollTo({ left: 0, behavior: 'smooth' });
     });
   });
 
-  /* ---------------- Work: drag-to-scroll (distinguishes drag from click) ---------------- */
-  document.querySelectorAll('[data-drag-scroll]').forEach(track => {
-    let isDown = false, startX = 0, scrollStart = 0, moved = false;
-
-    const start = (x) => { isDown = true; moved = false; startX = x; scrollStart = track.scrollLeft; track.classList.add('is-dragging'); };
-    const move = (x) => {
-      if (!isDown) return;
-      const delta = x - startX;
-      if (Math.abs(delta) > 4) moved = true;
-      track.scrollLeft = scrollStart - delta;
-    };
-    const end = () => { isDown = false; track.classList.remove('is-dragging'); };
-
-    track.addEventListener('mousedown', e => { start(e.pageX); e.preventDefault(); });
-    window.addEventListener('mousemove', e => move(e.pageX));
-    window.addEventListener('mouseup', end);
-    track.addEventListener('touchstart', e => start(e.touches[0].pageX), { passive: true });
-    track.addEventListener('touchmove', e => move(e.touches[0].pageX), { passive: true });
-    track.addEventListener('touchend', end);
-
-    track.querySelectorAll('.work-card').forEach(card => {
-      card.addEventListener('click', (e) => {
-        if (moved) { e.preventDefault(); e.stopPropagation(); return; }
-        openModal(card);
-      });
-    });
-
-    /* auto-scroll: slow continuous drift, pauses on hover/drag/touch */
-    if (!reduceMotion) {
-      let paused = false;
-      let dir = 1;
-      const speed = 0.5; // px per frame
-
-      track.addEventListener('mouseenter', () => { paused = true; });
-      track.addEventListener('mouseleave', () => { paused = false; });
-      track.addEventListener('touchstart', () => { paused = true; }, { passive: true });
-      track.addEventListener('touchend', () => { setTimeout(() => { paused = false; }, 1500); });
-
-      const autoScroll = () => {
-        if (!paused && !isDown) {
-          const max = track.scrollWidth - track.clientWidth;
-          if (max > 0) {
-            track.scrollLeft += speed * dir;
-            if (track.scrollLeft >= max) dir = -1;
-            if (track.scrollLeft <= 0) dir = 1;
-          }
-        }
-        requestAnimationFrame(autoScroll);
-      };
-      requestAnimationFrame(autoScroll);
-    }
+  /* ---------------- Work: click opens the project modal ----------------
+     The editorial scroll composition (js/work-parallax.js) only positions
+     and moves a wrapper around each .work-card — the card itself, its
+     data-* attributes and this click binding are untouched. */
+  workCards.forEach(card => {
+    card.addEventListener('click', () => openModal(card));
   });
 
   /* ---------------- Work: modal carousel ---------------- */
@@ -527,4 +481,3 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
-
