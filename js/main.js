@@ -62,6 +62,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ---------------- Hero title: subtle 3D tilt following the mouse ---------------- */
+  const heroSection = document.getElementById('top');
+  const heroTitle = document.getElementById('hero-title');
+  if (heroTitle && heroSection && hasFinePointer && !reduceMotion) {
+    let targetX = 0, targetY = 0, curX = 0, curY = 0;
+    const maxTilt = 8; // degrees
+
+    heroSection.addEventListener('mousemove', (e) => {
+      const rect = heroTitle.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / (rect.width / 2);
+      const dy = (e.clientY - cy) / (rect.height / 2);
+      targetY = Math.max(-1, Math.min(1, dx)) * maxTilt;
+      targetX = Math.max(-1, Math.min(1, dy)) * -maxTilt;
+    });
+
+    heroSection.addEventListener('mouseleave', () => {
+      targetX = 0; targetY = 0;
+    });
+
+    const tiltLoop = () => {
+      curX += (targetX - curX) * 0.08;
+      curY += (targetY - curY) * 0.08;
+      heroTitle.style.transform = `rotateX(${curX}deg) rotateY(${curY}deg)`;
+      requestAnimationFrame(tiltLoop);
+    };
+    requestAnimationFrame(tiltLoop);
+  }
+
+
   /* ---------------- Ticker: slow continuous autoplay, boosted while scrolling ---------------- */
   const tickerTrack = document.getElementById('ticker-track');
   if (tickerTrack && !reduceMotion) {
@@ -496,3 +527,4 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+

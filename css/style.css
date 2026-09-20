@@ -49,6 +49,11 @@ header em{ color: var(--bgdeep); font-style: italic; font-weight: 600; text-deco
 #site-header .nav-link::after{ background: var(--bgdeep); }
 #site-header .nav-link:hover{ color: var(--bgdeep); opacity: 1; }
 
+/* ---------- Footer: on the green footer background ---------- */
+footer .nav-link{ color: var(--bgdeep); opacity: 0.75; }
+footer .nav-link::after{ background: var(--bgdeep); }
+footer .nav-link:hover{ color: var(--bgdeep); opacity: 1; }
+
 /* ---------- Mobile menu ---------- */
 #menu-toggle[aria-expanded="true"] .menu-bar:first-child{ transform: translateY(3px) rotate(45deg); }
 #menu-toggle[aria-expanded="true"] .menu-bar:last-child{ transform: translateY(-3px) rotate(-45deg); }
@@ -117,3 +122,4 @@ header em{ color: var(--bgdeep); font-style: italic; font-weight: 600; text-deco
   .work-card .work-img{ transition: none !important; }
   *{ transition-duration: 0.01ms !important; }
 }
+
