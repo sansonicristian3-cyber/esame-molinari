@@ -151,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.add('is-active');
       btn.setAttribute('aria-selected', 'true');
       applyFilter(btn.dataset.filter);
+      window.__workRelayout?.(); // js/work-parallax.js: recompute compact layout for the filtered set
     });
   });
 

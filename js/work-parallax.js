@@ -24,10 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
 
-  /* ---------------- base layout: position each item from its data-attributes ---------------- */
-  function layout() {
-    const mobile = isMobile();
-    const canvasWidth = canvas.getBoundingClientRect().width;
+  function isVisible(item) {
+    const card = item.querySelector('.work-card');
+    return card && !card.classList.contains('is-hidden');
+  }
+
+  /* ---------------- base layout: the full art-directed composition ---------------- */
+  function layoutComposition(mobile) {
     const heightVh = parseFloat(canvas.dataset[mobile ? 'heightM' : 'height']) || 220;
     canvas.style.height = `${heightVh}vh`;
 
@@ -41,9 +44,47 @@ document.addEventListener('DOMContentLoaded', () => {
       item.style.width = `${w}%`;
       item._speed = parseFloat(item.dataset[mobile ? 'speedM' : 'speed']) || 1;
     });
+  }
 
+  /* ---------------- filtered layout: compact masonry, starts right under the filters ---------------- */
+  function layoutFiltered(mobile) {
+    const cols = mobile ? 1 : 2;
+    const colX = mobile ? [9] : [4, 54];
+    const colW = mobile ? 82 : 42;
+    const gapVh = mobile ? 3 : 4;
+    const colHeights = new Array(cols).fill(0);
+
+    const canvasWidthPx = canvas.getBoundingClientRect().width;
+    const vh = window.innerHeight / 100;
+
+    items.forEach((item) => {
+      const speed = parseFloat(item.dataset[mobile ? 'speedM' : 'speed']) || 1;
+      item._speed = speed;
+
+      if (!isVisible(item)) return; // stays wherever it last was, but display:none hides it
+
+      let col = 0;
+      for (let c = 1; c < cols; c++) if (colHeights[c] < colHeights[col]) col = c;
+
+      item.style.left = `${colX[col]}%`;
+      item.style.top = `${colHeights[col]}vh`;
+      item.style.width = `${colW}%`;
+
+      const itemWidthPx = (colW / 100) * canvasWidthPx;
+      const itemHeightPx = itemWidthPx * (4 / 3); // matches the work-img aspect-[3/4]
+      colHeights[col] += (itemHeightPx / vh) + gapVh;
+    });
+
+    canvas.style.height = `${Math.max(...colHeights, 40)}vh`;
+  }
+
+  function layout() {
+    const mobile = isMobile();
+    const filtered = items.some((item) => !isVisible(item));
+    if (filtered) layoutFiltered(mobile); else layoutComposition(mobile);
     canvasTop = window.scrollY + canvas.getBoundingClientRect().top;
   }
+  window.__workRelayout = layout; // called by main.js right after a filter click
 
   let canvasTop = 0;
   layout();

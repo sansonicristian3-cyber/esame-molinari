@@ -54,6 +54,10 @@ footer .nav-link{ color: var(--bgdeep); opacity: 0.75; }
 footer .nav-link::after{ background: var(--bgdeep); }
 footer .nav-link:hover{ color: var(--bgdeep); opacity: 1; }
 
+.footer-icon{ color: var(--bgdeep); opacity: 0.75; transition: opacity .25s ease, transform .25s ease; }
+.footer-icon svg{ width: 18px; height: 18px; display: block; }
+.footer-icon:hover{ opacity: 1; transform: translateY(-2px); }
+
 /* ---------- Mobile menu ---------- */
 #menu-toggle[aria-expanded="true"] .menu-bar:first-child{ transform: translateY(3px) rotate(45deg); }
 #menu-toggle[aria-expanded="true"] .menu-bar:last-child{ transform: translateY(-3px) rotate(-45deg); }
